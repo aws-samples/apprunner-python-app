@@ -33,14 +33,14 @@ The following are the step-by-step instructions to setup the above architecture.
 		o	Navigate the cloned repository directory 
 		o	Create an IAM Role called App-Runner-ServiceRole 
 
-					aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
+				aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
 
 		o	Now attach the Policies that allow App Runner to integrate with DynamoDB and CloudWatch
 
 
-					aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
+				aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
 
-					aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
+				aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
 
 
 •	Now Let’s setup the App Runner Service
@@ -83,12 +83,14 @@ The following are the step-by-step instructions to setup the above architecture.
   
 		o	Port should be 8080
 		o	Ignore the Additional Configuration  
+		
 ## Service Settings
 
 ## ![](/Images/Service_Settings.png)
 		o	No changes are required on the Autoscaling and Health check section, navigate to Security section 
 		o	In the Security section, Attach the instance role which was created earlier App-Runner-ServiceRole
 		o	Select “Use an AWS-Owned Key” in the AWS KMS Key section 
+		
 ## Security Settings
 
 ## ![](/Images/Security.png)
@@ -96,6 +98,7 @@ The following are the step-by-step instructions to setup the above architecture.
 		o	Click Next 
 		o	Review all the configuration and click on Create & deploy. 
 		o	Monitor the Service Overview section and monitor the status. The Service is ready when the Status turns to “Running”
+		
 ## Service Status
 
 ## ![](/Images/Service_Overview.png)
