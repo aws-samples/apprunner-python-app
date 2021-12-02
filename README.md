@@ -21,22 +21,19 @@ The following are the step-by-step instructions to setup the above architecture.
 •	Fork the repository to your GitHub Account.
 •	Clone the forked repository to your IDE Environment and Navigate to the cloned directory
 
-•	Launch the CloudFormation stack to create the Pipeline that gets invoked when a code is committed. The Code Build process creates a container image and stores the artifact in ECR. You will have to provide the following Input parameters 
+•	Launch the CloudFormation stack to create the Pipeline that gets invoked when a code is committed. The Code Build process creates a container image and stores the artifact in ECR. You will have to provide the following Input parameters.
 
-		o	BranchName: GitHub Branch Name
-		o	RepositoryName: GitHub Repository Name
-		o	ECRRepoName: ECR Repository Name 
-		o	GitHubOAuthToken: GitHub OAuth Token to authenticate and pull the source code. 
-		o	RepoOwner: GitHub Owner Name (User Name) 
+		- BranchName: GitHub Branch Name
+		- RepositoryName: GitHub Repository Name
+		- ECRRepoName: ECR Repository Name 
+		- GitHubOAuthToken: GitHub OAuth Token to authenticate and pull the source code. 
+		- RepoOwner: GitHub Owner Name (User Name) 
 
 •	Now let’s setup the IAM Roles required for App Runner. App Runner uses the IAM role to interact with other AWS Services. 
 		o	Navigate the cloned repository directory 
-		o	Create an IAM Role called App-Runner-ServiceRole 
+		o	Create an IAM Role called App-Runner-ServiceRole and attach the policies. 
 
 				aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
-
-		o	Now attach the Policies that allow App Runner to integrate with DynamoDB and CloudWatch
-
 
 				aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
 
