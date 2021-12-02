@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!-- Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. -->
+<!-- SPDX-License-Identifier: MIT-0 -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title>Movie Database API</title>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        form {border: 3px solid #f1f1f1;}
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 2px;
+        }
+
+	.APIContainer {
+	    padding: 8px;
+            background-color: #008000;
+            width: 5%;
+            color: white;
+            text-align: center;
+	}
+
+        .sampleContainer {
+            padding: auto;
+            background-color: #000000;
+            color: green;
+            text-align: left;
+	}
+
+    </style>
+</head>
+<body>
+<h1 align=center>Movie Database API Documentation</h1>
+<div class="container" style="background-color:#0000FF"></div>
+<br>
+<div class="APIContainer"><strong> GET </strong></div>
+<br>
+<div color=black><strong>Endpoint:</strong> /api/movie?year={int}&title={string}</div>
+<br>
+<div><strong> Sample Output: </strong></div>
+<br>
+<div class="sampleContainer">http://{endpoint}/movie?year=1933&title=King Kong
+<br>
+<br>
+<div class="sampleContainer">
+<code class=prettyprint> {
+	"Item": {
+		"year": 1933,
+		"info": {
+			"actors": ["Fay Wray", "Robert Armstrong", "Bruce Cabot"],
+			"release_date": "1933-03-07T00:00:00Z",
+			"plot": "A film crew goes to a tropical island for an exotic location shoot and discovers a colossal giant gorilla who takes a shine to their female blonde star.",
+			"genres": ["Adventure", "Fantasy", "Horror"],
+			"image_url": "http://ia.media-imdb.com/images/M/MV5BMTkxOTIxMDU2OV5BMl5BanBnXkFtZTcwNjM5NjQyMg@@._V1_SX400_.jpg",
+			"directors": ["Merian C. Cooper", "Ernest B. Schoedsack"],
+			"rating": 8,
+			"rank": 3551,
+			"running_time_secs": 6000
+		},
+		"title": "King Kong"
+	}
+} </code></div>
+</div>
+<br>
+<br>
+<div class="container" style="background-color:#0000FF"></div>
+<br>
+<br>
+<div class="APIContainer"><strong> POST </strong></div>
+<br>
+<br>
+<div color=black><strong>Endpoint:</strong> /api/movie</div>
+<br>
+<br>
+<div><strong> Sample Request: </strong></div>
+<br>
+<div class="sampleContainer">http://{endpoint}/movie
+<br>
+<br>
+<code class=prettyprint> 
+{
+    "year": 1944,
+    "title": "King Kong 2",
+    "info":  {  
+        "plot" : "King Kong Sequel Part 2",
+        "rating": 5,
+        "rank": 100,
+        "running_time_secs": 5821
+    }
+}
+</code>
+</div>
+<br>
+<div><strong> Sample Response: </strong></div>
+<br>
+<div class="sampleContainer">
+<code class=prettyprint> 
+{
+    "ResponseMetadata": {
+        "HTTPHeaders": {
+            "connection": "keep-alive",
+            "content-length": "2",
+            "content-type": "application/x-amz-json-1.0",
+            "date": "Thu, 18 Nov 2021 08:28:54 GMT",
+            "server": "Server",
+            "x-amz-crc32": "2745614147",
+            "x-amzn-requestid": "01J05GU8NHHHL4FSD8FMG4VCH7VV4KQNSO5AEMVJF66Q9ASUAAJG"
+        },
+        "HTTPStatusCode": 200,
+        "RequestId": "01J05GU8NHHHL4FSD8FMG4VCH7VV4KQNSO5AEMVJF66Q9ASUAAJG",
+        "RetryAttempts": 0
+    }
+}
+</code></div>
+<br>
+<br>
+<div class="container" style="background-color:#0000FF"></div>
+<br>
+<br>
+<div class="APIContainer"><strong> PUT </strong></div>
+<br>
+<br>
+<div color=black><strong>Endpoint:</strong> /api/movie</div>
+<br>
+<br>
+<div><strong> Sample Request: </strong></div>
+<br>
+<div class="sampleContainer">http://{endpoint}/movie
+<br>
+<br>
+<code class=prettyprint> 
+{
+    "year": 1944,
+    "title": "King Kong 2",
+    "info":  {  
+        "plot" : "King Kong Sequel Part 2",
+        "rating": 5,
+        "genres": ["Adventure", "Fantasy", "Horror"],
+        "rank": 100,
+        "running_time_secs": 5821
+    }
+}
+</code>
+</div>
+<br>
+<div><strong> Sample Response: </strong></div>
+<br>
+<div class="sampleContainer">
+<code class=prettyprint> 
+{
+    "ResponseMetadata": {
+        "HTTPHeaders": {
+            "connection": "keep-alive",
+            "content-length": "2",
+            "content-type": "application/x-amz-json-1.0",
+            "date": "Thu, 18 Nov 2021 08:41:27 GMT",
+            "server": "Server",
+            "x-amz-crc32": "2745614147",
+            "x-amzn-requestid": "B0KS1LP7C7SGF1F79BIB7R8FTVVV4KQNSO5AEMVJF66Q9ASUAAJG"
+        },
+        "HTTPStatusCode": 200,
+        "RequestId": "B0KS1LP7C7SGF1F79BIB7R8FTVVV4KQNSO5AEMVJF66Q9ASUAAJG",
+        "RetryAttempts": 0
+    }
+}
+</code></div>
+</div>
+<div class="container" style="background-color:#0000FF"></div>
+<br>
+<div class="APIContainer"><strong> DELETE </strong></div>
+<br>
+<div color=black><strong>Endpoint:</strong> /api/movie?year={int}&title={string}</div>
+<br>
+<div><strong> Sample Output: </strong></div>
+<br>
+<div class="sampleContainer">http://{endpoint}/movie?year=1944&title=King Kong 2
+<br>
+<br>
+<div class="sampleContainer">
+<code class=prettyprint> {
+{
+    "msg": "Delete successful"
+}
+</code></div>
+</div>
+<br>
+<br>
+<div class="container" style="background-color:#0000FF"></div>
+</body>
+</html>
+
