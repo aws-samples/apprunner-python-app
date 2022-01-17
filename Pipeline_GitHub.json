@@ -162,82 +162,7 @@
                 ]
             }
         },
-        "AmazonCloudWatchEventRule": {
-            "Type": "AWS::Events::Rule",
-            "Properties": {
-                "EventPattern": {
-                    "source": [
-                        "aws.codecommit"
-                    ],
-                    "detail-type": [
-                        "CodeCommit Repository State Change"
-                    ],
-                    "resources": [
-                        {
-                            "Fn::Join": [
-                                "",
-                                [
-                                    "arn:aws:codecommit:",
-                                    {
-                                        "Ref": "AWS::Region"
-                                    },
-                                    ":",
-                                    {
-                                        "Ref": "AWS::AccountId"
-                                    },
-                                    ":",
-                                    {
-                                        "Ref": "RepositoryName"
-                                    }
-                                ]
-                            ]
-                        }
-                    ],
-                    "detail": {
-                        "event": [
-                            "referenceCreated",
-                            "referenceUpdated"
-                        ],
-                        "referenceType": [
-                            "branch"
-                        ],
-                        "referenceName": [
-                            "master"
-                        ]
-                    }
-                },
-                "Targets": [
-                    {
-                        "Arn": {
-                            "Fn::Join": [
-                                "",
-                                [
-                                    "arn:aws:codepipeline:",
-                                    {
-                                        "Ref": "AWS::Region"
-                                    },
-                                    ":",
-                                    {
-                                        "Ref": "AWS::AccountId"
-                                    },
-                                    ":",
-                                    {
-                                        "Ref": "AppPipeline"
-                                    }
-                                ]
-                            ]
-                        },
-                        "RoleArn": {
-                            "Fn::GetAtt": [
-                                "AmazonCloudWatchEventRole",
-                                "Arn"
-                            ]
-                        },
-                        "Id": "codepipeline-AppPipeline"
-                    }
-                ]
-            }
-        },
+        
         "CodeBuildServiceRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -313,8 +238,8 @@
                   },
                 "ServiceRole" : {"Ref": "CodeBuildServiceRole" },
                 "Source" : {
-                    "Type" : "CODECOMMIT",
-                    "Location": { "Fn::Join" : [ ",", [ "https://git-codecommit.",{ "Ref" : "AWS::Region" },".amazonaws.com/v1/repos/",{ "Ref": "RepositoryName"} ] ] } 
+                    "Type" : "GITHUB",
+                    "Location": { "Fn::Join" : [ ",", [ "https://github.com/",{"Ref": "RepoOwner"}, "/",{ "Ref": "RepositoryName"} ] ] } 
                   }
                 }
         },
@@ -322,7 +247,7 @@
         "AppPipeline": {
             "Type": "AWS::CodePipeline::Pipeline",
             "Properties": {
-                "Name": "codecommit-events-pipeline",
+                "Name": "Apprunner-events-pipeline",
                 "RoleArn": {
                     "Fn::GetAtt": [
                         "CodePipelineServiceRole",
@@ -425,17 +350,6 @@
                                 {
                                     "Effect": "Allow",
                                     "Action": [
-                                        "codecommit:CancelUploadArchive",
-                                        "codecommit:GetBranch",
-                                        "codecommit:GetCommit",
-                                        "codecommit:GetUploadArchiveStatus",
-                                        "codecommit:UploadArchive"
-                                    ],
-                                    "Resource": "*"
-                                },
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
                                         "codedeploy:CreateDeployment",
                                         "codedeploy:GetApplicationRevision",
                                         "codedeploy:GetDeployment",
@@ -501,7 +415,38 @@
                     }
                 ]
             }
-        }
+        },
+        "DDBTable": {
+            "Type" : "AWS::DynamoDB::Table",
+            "Properties" : {
+                "AttributeDefinitions" : [ {
+                    "AttributeName": "year",
+                    "AttributeType": "N"
+                },
+                {
+                    "AttributeName": "title",
+                    "AttributeType": "S"
+                } ],
+                "BillingMode" : "PROVISIONED",
+                "ContributorInsightsSpecification" : {
+                    "Enabled" : true
+                  },
+                "KeySchema" : [ {
+                    "AttributeName": "year",
+                    "KeyType": "HASH"                  },
+                {
+                    "AttributeName": "title",
+                    "KeyType": "RANGE"  
+                } ],
+                "ProvisionedThroughput" : {
+                    "ReadCapacityUnits" : 10,
+                    "WriteCapacityUnits" : 10
+                  },
+                "TableClass" : "STANDARD",
+                "TableName" : "Movies"
+              }
+          }
+
     }
 }
 
