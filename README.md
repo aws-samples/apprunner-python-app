@@ -1,5 +1,5 @@
-Deploy Python Application using AWS App Runner
-by Sathish Kumar Prabakaran, Enterprise Solution Architect, Global Enterprise
+## Deploy Python Application using AWS App Runner
+#### by Sathish Kumar Prabakaran, Enterprise Solution Architect, Global Enterprise
 
 It takes a village to design, develop, and host an application. It all starts with a business use case that gets translated to requirements and design and is then handed over to the developers for development. The developers create the application, test it in their local environments, and hand it over to the operations team for hosting. There are often delays in provisioning the infrastructure and hosting the application. Until now, it has been a dream of the business stakeholders and developers to see their use case application creating a positive impact on their end customers immediately after development.   
 
@@ -19,7 +19,7 @@ The solution will set up a CodePipeline that pulls the code from GitHub and buil
 ### Prerequisites:
 
 For this walkthrough, you should have the following prerequisites: 
-•	An AWS account with full privileges to create the following resources: 
+* An AWS account with full privileges to create the following resources: 
 - S3 Bucket
 - IAM Role 
 - CodePipeline 
@@ -27,7 +27,7 @@ For this walkthrough, you should have the following prerequisites:
 - DynamoDB Table 
 - ECR Repository
 - APP Runner 
-•	Basic knowledge of containers
+* Basic knowledge of containers
 
 ### Step-by-step instructions to implement the above solution is as follows:
 #### •   Step 1: Fork the repository to your GitHub account.
@@ -47,22 +47,22 @@ For this walkthrough, you should have the following prerequisites:
 #### •	Step 4: Load test data to DynamoDB table 
 1.	Navigate the cloned repository directory. 
 2.	Execute the below script to load the test data.
-
-		```
-		bash scripts/LoadData.sh
-		```
+```
+bash scripts/LoadData.sh
+```
 
 #### •	Step 5: Now, let’s set up the IAM roles required for App Runner. App Runner uses the IAM role to interact with other AWS services. 
 1.	Navigate the cloned repository directory. 
 2.	Create an IAM role called App-Runner-ServiceRole.
-		```
-		aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
-		```
+```
+aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
+```
 3.	Now attach the policies that allow App Runner to integrate with DynamoDB and CloudWatch
-		```	
-		aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
-		aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
-		```
+```	
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
+```
+
 #### •	Step 6: Now, Let’s set up the App Runner service
 1.	Sign in to the AWS console.
 2.	Navigate to the AWS App Runner service page.
@@ -87,10 +87,10 @@ For this walkthrough, you should have the following prerequisites:
 12.	In the Service settings section, provide a Service name python-app.
 13.	Set the Virtual CPU as 1vCPU and 2 GB memory. 
 14.	Click on Add environment variable and add the following two environment variables: 
-		| Key		    | Value			|
-		| ------------- | ------------- |
-		| AWS_REGION    | AWS Region ID (Eg: us-east-1 )  |
-		| DDB_TABLE     | Movies						  |
+| Key		    | Value			                  |
+| ------------- | ------------------------------- |
+| AWS_REGION    | AWS Region ID (Eg: us-east-1 )  |
+| DDB_TABLE     | Movies						  |
   
 15.	Port should be 8080.
 16.	Ignore the Additional configuration. 
