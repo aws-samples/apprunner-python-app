@@ -149,6 +149,7 @@ curl -v -X POST -H "Content-Type: application/json"  -k -i 'https://<your-endpoi
 To test the DELETE method, copy the App Runner Default domain and add the path /api/movie and pass a value to the query arguments “year” and “title.” Use tools like Postman or curl to send a DELETE request to the endpoint. 
 
 ![](/Images/DELETE.png)
+
 The following shows an example curl command using the information in the screenshot:
 
 ```
