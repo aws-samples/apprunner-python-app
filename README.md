@@ -12,7 +12,7 @@ In this blog, we will deploy a containerized Python application that interacts w
 
 The solution will set up a CodePipeline that pulls the code from GitHub and builds the codes, then stores the container image artifact in Amazon ECR. App Runner is configured to trigger automatic deployments once a new image is pushed to ECR. Python applications running in App Runner will leverage Amazon DynamoDB as the persistent data store and stream the log to Amazon CloudWatch. 
 
-## ![](/Images/Architecture.png)
+![](/Images/Architecture.png)
 
 ## Walkthrough
 
@@ -30,11 +30,11 @@ For this walkthrough, you should have the following prerequisites:
 •	Basic knowledge of containers
 
 ### Step-by-step instructions to implement the above solution is as follows:
-•	Step 1: Fork the repository to your GitHub account.
+#### •   Step 1: Fork the repository to your GitHub account.
 
-•	Step 2: Clone the forked repository to your AWS CloudShell console and navigate to the cloned directory.
+#### •	Step 2: Clone the forked repository to your AWS CloudShell console and navigate to the cloned directory.
 
-•	Step 3: Launch the CloudFormation stack to create the pipeline that gets invoked when a code is committed. You will have to provide the following input parameters: 
+#### •	Step 3: Launch the CloudFormation stack to create the pipeline that gets invoked when a code is committed. You will have to provide the following input parameters: 
 
 [Launch stack button]
 
@@ -44,27 +44,26 @@ For this walkthrough, you should have the following prerequisites:
 - GitHubOAuthToken: GitHub OAuth Token to authenticate and pull the source code 
 - RepoOwner: GitHub Owner Name (User Name) 
 
-•	Step 4: Load test data to DynamoDB table 
+#### •	Step 4: Load test data to DynamoDB table 
 1.	Navigate the cloned repository directory. 
 2.	Execute the below script to load the test data.
 
-```
-bash scripts/LoadData.sh
-```
+		```
+		bash scripts/LoadData.sh
+		```
 
-•	Step 5: Now, let’s set up the IAM roles required for App Runner. App Runner uses the IAM role to interact with other AWS services. 
+#### •	Step 5: Now, let’s set up the IAM roles required for App Runner. App Runner uses the IAM role to interact with other AWS services. 
 1.	Navigate the cloned repository directory. 
 2.	Create an IAM role called App-Runner-ServiceRole.
-
-aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
-
+		```
+		aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
+		```
 3.	Now attach the policies that allow App Runner to integrate with DynamoDB and CloudWatch
-
-aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
-
-aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
-
-•	Step 6: Now, Let’s set up the App Runner service
+		```	
+		aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
+		aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
+		```
+#### •	Step 6: Now, Let’s set up the App Runner service
 1.	Sign in to the AWS console.
 2.	Navigate to the AWS App Runner service page.
 3.	Choose Create an App Runner Service.
@@ -76,53 +75,55 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFu
 
 7.	Choose Continue.	 
 
-## ![](/Images/Source_Final.png)
+![](/Images/Source_Final.png)
 
 8.	Navigate to the Deployment settings section 
 9.	Set the Deployment trigger to Automatic 
 10.	Select Create new service role for the ECR access role. 
 
-## ![](/Images/Deployment_Settings.png)
+![](/Images/Deployment_Settings.png)
 
 11.	Choose Next.
 12.	In the Service settings section, provide a Service name python-app.
 13.	Set the Virtual CPU as 1vCPU and 2 GB memory. 
 14.	Click on Add environment variable and add the following two environment variables: 
-		Key			Value
-		AWS_REGION	AWS Region ID (Eg: us-east-1 ) 
-		DDB_TABLE	Movies
+		| Key		    | Value			|
+		| ------------- | ------------- |
+		| AWS_REGION    | AWS Region ID (Eg: us-east-1 )  |
+		| DDB_TABLE     | Movies						  |
   
 15.	Port should be 8080.
-16.	Ignore the Additional configuration. \
+16.	Ignore the Additional configuration. 
 		
-## ![](/Images/Service_Settings.png)
+![](/Images/Service_Settings.png)
+
 17.	No changes are required on the Autoscaling and Health check section. Navigate to the Security section. 
 18.	In the Security section, attach the instance role that was created earlier AppRunner-ServiceRole
 19.	Select Use an AWS-owned key in the AWS KMS key section 
 
-## ![](/Images/Security.png)
+![](/Images/Security.png)
 		 
 20.	Choose Next. 
 21.	Review all the configurations and choose Create & deploy. 
 22.	Monitor the Service overview section and monitor the Status. The service is ready when the status turns to Running.
 
-## ![](/Images/Service_Overview.png)
+![](/Images/Service_Overview.png)
 
 23.	Now click on the default domain URL to access your service. 
 
-## ![](/Images/URL_Access.png)
+![](/Images/URL_Access.png)
 
 		 
-•	Step 6: Follow the API documentation and test the GET, POST, PUT, and DELETE APIs. 
+#### •	Step 6: Follow the API documentation and test the GET, POST, PUT, and DELETE APIs. 
 1.	GET
 To test the GET method, copy the App Runner Default domain and add the path /api/movie and pass a value to the query arguments “year” and “title.” You can use a standard browser like Firefox or Chrome to test the GET method. 
 
-## ![](/Images/GET.png)
+![](/Images/GET.png)
 
 		 
 2.	POST
 To test the POST method, you will have to use a tool like Postman or curl. If you plan to use curl, it is important to add the correct content-type HTTP header. Copy the App Runner Default domain and add the path /api/movie. The request body should follow the following JSON schema:
-
+```
 {
 	“year” : integer,
 	“title” : “string”,
@@ -133,8 +134,8 @@ To test the POST method, you will have to use a tool like Postman or curl. If yo
 	“running_time_secs”: integer
 	}
 }
-
-## ![](/Images/POST.png)
+```
+![](/Images/POST.png)
 
 The following shows an example curl command using the information in the screenshot:
 
@@ -143,7 +144,7 @@ curl -v -X POST -H "Content-Type: application/json"  -k -i 'https://<your-endpoi
 3.	DELETE
 To test the DELETE method, copy the App Runner Default domain and add the path /api/movie and pass a value to the query arguments “year” and “title.” Use tools like Postman or curl to send a DELETE request to the endpoint. 
 
-## ![](/Images/DELETE.png)
+![](/Images/DELETE.png)
 The following shows an example curl command using the information in the screenshot:
 
 curl -X DELETE https://<your-endpoint>/api/movie?year=1944&title=King%20Kong%202
@@ -155,7 +156,7 @@ Cleaning up:
 
 
 
-Conclusion: 
+## Conclusion: 
 The blog covered how an application can be deployed without any infrastructure knowledge by the developers themselves, in turn reducing the time to market and increasing agility. 
 
 The AWS App Runner developer guide is available at the following link: https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html
