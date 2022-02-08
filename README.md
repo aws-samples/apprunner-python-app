@@ -117,14 +117,14 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFu
 
 		 
 #### •	Step 6: Follow the API documentation and test the GET, POST, PUT, and DELETE APIs. 
-## 1.	GET
+##### 1.	GET
 
 To test the GET method, copy the App Runner Default domain and add the path /api/movie and pass a value to the query arguments “year” and “title.” You can use a standard browser like Firefox or Chrome to test the GET method. 
 
 ![](/Images/GET.png)
 
 		 
-## 2.	POST
+##### 2.	POST
 To test the POST method, you will have to use a tool like Postman or curl. If you plan to use curl, it is important to add the correct content-type HTTP header. Copy the App Runner Default domain and add the path /api/movie. The request body should follow the following JSON schema:
 ```
 {
@@ -145,7 +145,7 @@ The following shows an example curl command using the information in the screens
 ```
 curl -v -X POST -H "Content-Type: application/json"  -k -i 'https://<your-endpoint>/api/movie' --data '{ "year": 1944, "title": "King Kong 2", "info": { "plot" : "King Kong Sequel Part 2", "rating": 5, "rank": 100, "running_time_secs": 5821 } }'
 ```
-## 3.	DELETE
+##### 3.	DELETE
 To test the DELETE method, copy the App Runner Default domain and add the path /api/movie and pass a value to the query arguments “year” and “title.” Use tools like Postman or curl to send a DELETE request to the endpoint. 
 
 ![](/Images/DELETE.png)
