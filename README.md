@@ -1,5 +1,5 @@
 ## Deploy Python Application using AWS App Runner
-#### by Sathish Kumar Prabakaran, Enterprise Solution Architect, Global Enterprise
+###### by Sathish Kumar Prabakaran, Enterprise Solution Architect, Global Enterprise
 
 It takes a village to design, develop, and host an application. It all starts with a business use case that gets translated to requirements and design and is then handed over to the developers for development. The developers create the application, test it in their local environments, and hand it over to the operations team for hosting. There are often delays in provisioning the infrastructure and hosting the application. Until now, it has been a dream of the business stakeholders and developers to see their use case application creating a positive impact on their end customers immediately after development.   
 
@@ -20,13 +20,13 @@ The solution will set up a CodePipeline that pulls the code from GitHub and buil
 
 For this walkthrough, you should have the following prerequisites: 
 * An AWS account with full privileges to create the following resources: 
-- S3 Bucket
-- IAM Role 
-- CodePipeline 
-- CodeBuild
-- DynamoDB Table 
-- ECR Repository
-- APP Runner 
+	- S3 Bucket
+	- IAM Role 
+	- CodePipeline 
+	- CodeBuild
+	- DynamoDB Table 
+	- ECR Repository
+	- APP Runner 
 * Basic knowledge of containers
 
 ### Step-by-step instructions to implement the above solution is as follows:
@@ -87,10 +87,10 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFu
 12.	In the Service settings section, provide a Service name python-app.
 13.	Set the Virtual CPU as 1vCPU and 2 GB memory. 
 14.	Click on Add environment variable and add the following two environment variables: 
-| Key		    | Value			                  |
-| ------------- | ------------------------------- |
-| AWS_REGION    | AWS Region ID (Eg: us-east-1 )  |
-| DDB_TABLE     | Movies						  |
+| Key | Value |
+| --- | --- |
+| AWS_REGION | AWS Region ID (Eg: us-east-1 ) |
+| DDB_TABLE | Movies |
   
 15.	Port should be 8080.
 16.	Ignore the Additional configuration. 
