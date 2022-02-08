@@ -156,9 +156,9 @@ The following shows an example curl command using the information in the screens
 curl -X DELETE https://<your-endpoint>/api/movie?year=1944&title=King%20Kong%202
 ```
 Cleaning up:
-	- Delete the App Runner service
-	- Delete the IAM role created earlier App-Runner-ServiceRole.
-	- Delete the CloudFormation stack. 
+- Delete the App Runner service
+- Delete the IAM role created earlier App-Runner-ServiceRole.
+- Delete the CloudFormation stack. 
 
 
 
