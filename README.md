@@ -48,7 +48,9 @@ For this walkthrough, you should have the following prerequisites:
 1.	Navigate the cloned repository directory. 
 2.	Execute the below script to load the test data.
 
+```
 bash scripts/LoadData.sh
+```
 
 •	Step 5: Now, let’s set up the IAM roles required for App Runner. App Runner uses the IAM role to interact with other AWS services. 
 1.	Navigate the cloned repository directory. 
