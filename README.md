@@ -16,20 +16,20 @@ The solution will set up a CodePipeline that pulls the code from GitHub and buil
 
 ## Walkthrough
 
-# Prerequisites:
+### Prerequisites:
 
 For this walkthrough, you should have the following prerequisites: 
 •	An AWS account with full privileges to create the following resources: 
-        -	S3 Bucket
-		-	IAM Role 
-		-	CodePipeline 
-		-	CodeBuild
-		-	DynamoDB Table 
-		-	ECR Repository
-		-	APP Runner 
+- S3 Bucket
+- IAM Role 
+- CodePipeline 
+- CodeBuild
+- DynamoDB Table 
+- ECR Repository
+- APP Runner 
 •	Basic knowledge of containers
 
-Step-by-step instructions to implement the above solution is as follows:
+### Step-by-step instructions to implement the above solution is as follows:
 •	Step 1: Fork the repository to your GitHub account.
 
 •	Step 2: Clone the forked repository to your AWS CloudShell console and navigate to the cloned directory.
@@ -38,29 +38,29 @@ Step-by-step instructions to implement the above solution is as follows:
 
 [Launch stack button]
 
-		o	BranchName: GitHub Branch Name
-		o	RepositoryName: GitHub Repository Name
-		o	ECRRepoName: ECR Repository Name 
-		o	GitHubOAuthToken: GitHub OAuth Token to authenticate and pull the source code 
-		o	RepoOwner: GitHub Owner Name (User Name) 
+- BranchName: GitHub Branch Name
+- RepositoryName: GitHub Repository Name
+- ECRRepoName: ECR Repository Name 
+- GitHubOAuthToken: GitHub OAuth Token to authenticate and pull the source code 
+- RepoOwner: GitHub Owner Name (User Name) 
 
 •	Step 4: Load test data to DynamoDB table 
 1.	Navigate the cloned repository directory. 
 2.	Execute the below script to load the test data.
 
-			bash scripts/LoadData.sh
+bash scripts/LoadData.sh
 
 •	Step 5: Now, let’s set up the IAM roles required for App Runner. App Runner uses the IAM role to interact with other AWS services. 
 1.	Navigate the cloned repository directory. 
 2.	Create an IAM role called App-Runner-ServiceRole.
 
-	aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
+aws iam create-role --role-name App-Runner-ServiceRole --assume-role-policy-document file://apprunner-role.json
 
 3.	Now attach the policies that allow App Runner to integrate with DynamoDB and CloudWatch
 
-			aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name App-Runner-ServiceRole
 
-			aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess --role-name App-Runner-ServiceRole
 
 •	Step 6: Now, Let’s set up the App Runner service
 1.	Sign in to the AWS console.
@@ -69,8 +69,8 @@ Step-by-step instructions to implement the above solution is as follows:
 4.	Select repository type as Container Registry.
 5.	Select provider as Amazon ECR.
 6.	Choose Browse to select your ECR repository and set the Image tag to latest.
- 
-## ![](/Images/ECR_Repo_Selection.png)
+
+![](/Images/ECR_Repo_Selection.png)
 
 7.	Choose Continue.	 
 
