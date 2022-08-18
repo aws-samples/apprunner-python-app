@@ -34,9 +34,7 @@ For this walkthrough, you should have the following prerequisites:
 
 #### •	Step 2: Clone the forked repository to your AWS CloudShell console and navigate to the cloned directory.
 
-#### •	Step 3: Launch the CloudFormation stack to create the pipeline that gets invoked when a code is committed. You will have to provide the following input parameters: 
-
-[Launch stack button]
+#### •	Step 3: Launch the CloudFormation stack using Pipeline_GitHub.json which is part of the repo to create the pipeline that gets invoked when a code is committed. You will have to provide the following input parameters: 
 
 - BranchName: GitHub Branch Name
 - RepositoryName: GitHub Repository Name

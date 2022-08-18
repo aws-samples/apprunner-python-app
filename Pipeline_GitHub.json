@@ -29,7 +29,22 @@
     },
     "Resources": {
         "CodePipelineArtifactStoreBucket": {
-            "Type": "AWS::S3::Bucket"
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketEncryption": {
+                    "ServerSideEncryptionConfiguration": [
+                        {
+                            "ServerSideEncryptionByDefault": {
+                                "SSEAlgorithm": "aws:kms",
+                                "KMSMasterKeyID": "aws/s3"
+                            }
+                        }
+                    ]
+                },
+                "VersioningConfiguration": {
+                    "Status" : "Enabled"
+                },
+            }    
         },
         "CodePipelineArtifactStoreBucketPolicy": {
             "Type": "AWS::S3::BucketPolicy",
